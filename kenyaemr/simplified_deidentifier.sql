@@ -20,7 +20,7 @@ begin
 	set @size = (select max(person_name_id) from person_name);
 	set @start = 0;
 	-- if stepsize is increased, you should increase "limit 300" below as well
-	set @stepsize = 300; 
+	set @stepsize = 300;
 	while @start < @size do
 		update
 			person_name
@@ -37,7 +37,7 @@ begin
 										limit 300
 									) rid,
 									random_names rn
-								where	
+								where
 									rid.rid = rn.rid
 								order by
 									rand()
@@ -47,7 +47,7 @@ begin
 						family_name = middle_name
 		where
 			person_name_id between @start and (@start + @stepsize);
-		
+
 		set @start = @start + @stepsize +1;
 	end while;
 end;
@@ -57,18 +57,10 @@ call randomize_names();
 drop procedure if exists randomize_names;
 
 
-update 
+update
 	person_address
 set
-	address1 = concat(person_id, ' address1'),
-	address2 = concat(person_id, ' address2'),
-	latitude = null,
-	longitude = null;
-
-update location set name = concat('Location-', location_id);
-
-
-/**
+	address1 = concat(person_id, ' address1')/**
 Person_attribute_type_id   Name
 ------------------------   -----
 4                          Mother's Name
@@ -107,4 +99,27 @@ update patient_identifier set identifier=replace(identifier,'4','7') where ident
 update patient_identifier set identifier=replace(identifier,'3','0') where identifier_type=5;
 update patient_identifier set identifier=replace(identifier,'1','8') where identifier_type=5;
 update patient_identifier set identifier=replace(identifier,'5','0') where identifier_type=5;
+update 	address2 = concat(person_id, ' address2'),
+	latitude = null,
+	longitude = null;
 
+update location set name = concat('Location-', location_id);
+/* nupi*/
+update patient_identifier set identifier=replace(identifier,'2','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'0','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'4','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'3','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'1','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'5','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'6','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'M','X') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'O','X') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'H','X') where identifier_type=9;
+
+# ccc numbers
+# Patient Clinic Number
+update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), 'XXX') where identifier_type=4;
+# Unique Patient Number
+update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), 'XXX') where identifier_type=6;
+# OpenMRS ID
+update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), 'XXX') where identifier_type=3;
