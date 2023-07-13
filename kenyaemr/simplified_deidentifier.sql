@@ -1,3 +1,4 @@
+use openmrs;
 drop table if exists random_names;
 
 CREATE TABLE `random_names` (
@@ -60,7 +61,8 @@ drop procedure if exists randomize_names;
 update
 	person_address
 set
-	address1 = concat(person_id, ' address1')/**
+	address1 = concat(person_id, ' address1');
+/**
 Person_attribute_type_id   Name
 ------------------------   -----
 4                          Mother's Name
@@ -98,10 +100,7 @@ update patient_identifier set identifier=replace(identifier,'0','9') where ident
 update patient_identifier set identifier=replace(identifier,'4','7') where identifier_type=5;
 update patient_identifier set identifier=replace(identifier,'3','0') where identifier_type=5;
 update patient_identifier set identifier=replace(identifier,'1','8') where identifier_type=5;
-update patient_identifier set identifier=replace(identifier,'5','0') where identifier_type=5;
-update 	address2 = concat(person_id, ' address2'),
-	latitude = null,
-	longitude = null;
+update patient_identifier set identifier=replace(identifier,'5','0') where identifier_type=5
 
 update location set name = concat('Location-', location_id);
 /* nupi*/
@@ -112,14 +111,14 @@ update patient_identifier set identifier=replace(identifier,'3','0') where ident
 update patient_identifier set identifier=replace(identifier,'1','0') where identifier_type=9;
 update patient_identifier set identifier=replace(identifier,'5','0') where identifier_type=9;
 update patient_identifier set identifier=replace(identifier,'6','0') where identifier_type=9;
-update patient_identifier set identifier=replace(identifier,'M','X') where identifier_type=9;
-update patient_identifier set identifier=replace(identifier,'O','X') where identifier_type=9;
-update patient_identifier set identifier=replace(identifier,'H','X') where identifier_type=9;
-
+update patient_identifier set identifier=replace(identifier,'M','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'O','0') where identifier_type=9;
+update patient_identifier set identifier=replace(identifier,'H','0') where identifier_type=9;
+# e59c9a6664d7
+#  next of kin
+# update person_attribute set value='test test' where person_attribute_type_id = 11;
 # ccc numbers
 # Patient Clinic Number
-update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), 'XXX') where identifier_type=4;
+# update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), '0X') where identifier_type=4;
 # Unique Patient Number
-update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), 'XXX') where identifier_type=6;
-# OpenMRS ID
-update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), 'XXX') where identifier_type=3;
+# update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), '0XX') where identifier_type=6;
