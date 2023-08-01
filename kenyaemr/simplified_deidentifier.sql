@@ -122,3 +122,7 @@ update patient_identifier set identifier=replace(identifier,'H','0') where ident
 # update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), '0X') where identifier_type=4;
 # Unique Patient Number
 # update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), '0XX') where identifier_type=6;
+update patient_identifier set identifier=replace(identifier,'H','ST') where identifier_type=10;
+update patient_identifier set identifier=replace(identifier,'M','T') where identifier_type=10;
+update patient_identifier set identifier=replace(identifier,'O','E') where identifier_type=10;
+update patient_identifier set identifier=replace(identifier,'H','ST') where identifier_type=10;
