@@ -116,7 +116,7 @@ update patient_identifier set identifier=replace(identifier,'O','0') where ident
 update patient_identifier set identifier=replace(identifier,'H','0') where identifier_type=9;
 # e59c9a6664d7
 #  next of kin
-# update person_attribute set value='test test' where person_attribute_type_id = 11;
+update person_attribute set value='test test' where person_attribute_type_id = 11;
 # ccc numbers
 # Patient Clinic Number
 # update patient_identifier set identifier= Replace(identifier, Substring(identifier, 1, 2), '0X') where identifier_type=4;
