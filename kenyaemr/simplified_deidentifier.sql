@@ -126,3 +126,12 @@ update patient_identifier set identifier=replace(identifier,'H','ST') where iden
 update patient_identifier set identifier=replace(identifier,'M','T') where identifier_type=10;
 update patient_identifier set identifier=replace(identifier,'O','E') where identifier_type=10;
 update patient_identifier set identifier=replace(identifier,'H','ST') where identifier_type=10;
+
+// csr endpoints
+update global_property set property_value = 'partner.test.client' where property =  'kenyaemr.client.registry.oath2.client.id';
+update global_property set property_value = 'partnerTestPwd' where property =  'kenyaemr.client.registry.oath2.client.secret';
+update global_property set property_value = 'DHP.Gateway DHP.Partners' where property =  'kenyaemr.client.registry.oath2.scope';
+update global_property set property_value = 'https://dhpstagingapi.health.go.ke/partners/registry' where property =  'kenyaemr.client.registry.post.api';
+update global_property set property_value = 'https://dhpidentitystagingapi.health.go.ke/connect/token' where property =  'kenyaemr.client.registry.token.url';
+update global_property set property_value = 'https://dhpstagingapi.health.go.ke/partners/registry/search/upi' where property =  'kenyaemr.client.registry.query.upi.api';
+update global_property set property_value = 'https://dhpstagingapi.health.go.ke/partners/registry/search' where property =  'kenyaemr.client.registry.get.api';
