@@ -135,3 +135,49 @@ update global_property set property_value = 'https://dhpstagingapi.health.go.ke/
 update global_property set property_value = 'https://dhpidentitystagingapi.health.go.ke/connect/token' where property =  'kenyaemr.client.registry.token.url';
 update global_property set property_value = 'https://dhpstagingapi.health.go.ke/partners/registry/search/upi' where property =  'kenyaemr.client.registry.query.upi.api';
 update global_property set property_value = 'https://dhpstagingapi.health.go.ke/partners/registry/search' where property =  'kenyaemr.client.registry.get.api';
+update global_property set property_value = '' where property =  'kenyaemril.fhir.server.url';
+update global_property set property_value = '' where property =  'interop.system.url.configuration';
+drop procedure if exists randomize_name_referral;
+create procedure randomize_name_referral()
+begin
+	set @size = (select max(id) from expected_transfer_ins);
+	set @start = 0;
+	-- if stepsize is increased, you should increase "limit 300" below as well
+	set @stepsize = 300;
+	while @start < @size do
+		update
+			expected_transfer_ins
+		set
+			first_name = (select
+									name
+								from
+									(select
+										rid
+										from
+										random_names
+										order by
+										rand()
+										limit 300
+									) rid,
+									random_names rn
+								where
+									rid.rid = rn.rid
+								order by
+									rand()
+								limit 1
+							),
+						middle_name =  first_name,
+						last_name = middle_name
+		where
+			id between @start and (@start + @stepsize);
+
+		set @start = @start + @stepsize +1;
+	end while;
+end;
+delimiter ;
+call randomize_name_referral();
+
+update expected_transfer_ins set nupi=replace(nupi,'H','ST');
+update expected_transfer_ins set nupi=replace(nupi,'M','T');
+update expected_transfer_ins set nupi=replace(nupi,'O','E');
+update expected_transfer_ins set nupi=replace(nupi,'H','ST');
