@@ -98,7 +98,7 @@ update patient_identifier set identifier=replace(identifier,'3','0') where ident
 update patient_identifier set identifier=replace(identifier,'1','8') where identifier_type=5;
 update patient_identifier set identifier=replace(identifier,'5','0') where identifier_type=5
 
--- update location set name = concat('Location-', location_id);
+
 /* nupi*/
 update patient_identifier set identifier=replace(identifier,'2','0') where identifier_type=9;
 update patient_identifier set identifier=replace(identifier,'0','0') where identifier_type=9;
