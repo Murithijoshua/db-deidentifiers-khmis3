@@ -96,7 +96,7 @@ update patient_identifier set identifier=replace(identifier,'0','9') where ident
 update patient_identifier set identifier=replace(identifier,'4','7') where identifier_type=5;
 update patient_identifier set identifier=replace(identifier,'3','0') where identifier_type=5;
 update patient_identifier set identifier=replace(identifier,'1','8') where identifier_type=5;
-update patient_identifier set identifier=replace(identifier,'5','0') where identifier_type=5
+update patient_identifier set identifier=replace(identifier,'5','0') where identifier_type=5;
 
 
 /* nupi*/
@@ -123,7 +123,7 @@ update patient_identifier set identifier=replace(identifier,'M','T') where ident
 update patient_identifier set identifier=replace(identifier,'O','E') where identifier_type=10;
 update patient_identifier set identifier=replace(identifier,'H','ST') where identifier_type=10;
 
-// csr endpoints
+# // csr endpoints
 update global_property set property_value = 'partner.test.client' where property =  'kenyaemr.client.registry.oath2.client.id';
 update global_property set property_value = 'partnerTestPwd' where property =  'kenyaemr.client.registry.oath2.client.secret';
 update global_property set property_value = 'DHP.Gateway DHP.Partners' where property =  'kenyaemr.client.registry.oath2.scope';
@@ -160,3 +160,13 @@ update expected_transfer_ins set nupi=replace(nupi,'H','ST');
 update expected_transfer_ins set nupi=replace(nupi,'M','T');
 update expected_transfer_ins set nupi=replace(nupi,'O','E');
 update expected_transfer_ins set nupi=replace(nupi,'H','ST');
+
+
+-- Run at specific time (e.g., 23:59 every day) closing active visits and queues
+CREATE EVENT close_open_visits
+ON SCHEDULE EVERY 1 DAY
+STARTS CURRENT_DATE + INTERVAL 23 HOUR + INTERVAL 59 MINUTE
+DO
+    UPDATE openmrs.visit t
+    SET t.date_stopped = CURRENT_TIMESTAMP
+    WHERE t.date_stopped IS NULL;
