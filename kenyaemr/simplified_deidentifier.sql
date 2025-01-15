@@ -170,3 +170,7 @@ DO
     UPDATE openmrs.visit t
     SET t.date_stopped = CURRENT_TIMESTAMP
     WHERE t.date_stopped IS NULL;
+    UPDATE queue_entry
+    SET ended_at = DATE_ADD(started_at, INTERVAL 2 HOUR)
+    WHERE ended_at IS NULL AND VOIDED=0 AND started_at < current_timestamp;
+
